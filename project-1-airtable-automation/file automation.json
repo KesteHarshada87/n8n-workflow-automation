@@ -1,0 +1,679 @@
+{
+  "name": "first automation",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appA3oLPuBxcizu4e",
+          "mode": "list",
+          "cachedResultName": "clean_dwlr.csv",
+          "cachedResultUrl": "https://airtable.com/appA3oLPuBxcizu4e"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblJ8cCQhx0jjDc2n",
+          "mode": "list",
+          "cachedResultName": "New Table",
+          "cachedResultUrl": "https://airtable.com/appA3oLPuBxcizu4e/tblJ8cCQhx0jjDc2n"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Record Name": "={{ $json.chatInput }}",
+            "Field A": "={{ $json['Field A'] }}",
+            "Field B": "={{ $json['Field B'] }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Record Name",
+              "displayName": "Record Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Field A",
+              "displayName": "Field A",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Field B",
+              "displayName": "Field B",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Field C",
+              "displayName": "Field C",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Field D",
+              "displayName": "Field D",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        208,
+        0
+      ],
+      "id": "8d98c6ed-4728-4884-a1eb-14d470de774f",
+      "name": "Create a record",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "gUKGMObugOz7rl2q",
+          "name": "Airtable Personal Access Token account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.fields['Field B'] }}",
+                    "rightValue": "=Manager",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "e613c05d-27df-4b0f-bde3-f5219920d6cf"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "e48b5e53-c96c-4ca1-a5fc-59a1171c55e3",
+                    "leftValue": "={{ $json.fields['Field B'] }}",
+                    "rightValue": "=Employee",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 3
+                },
+                "conditions": [
+                  {
+                    "id": "96c1fcd3-4952-4d93-ad72-4f828f142374",
+                    "leftValue": "={{ $json.fields['Field B'] }}",
+                    "rightValue": "Guard",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.4,
+      "position": [
+        416,
+        0
+      ],
+      "id": "a8d5433e-3cd2-434d-8380-3e48ebda1d20",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "formTitle": "my team",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "Field A",
+              "fieldType": "=text",
+              "fieldOptions": {
+                "values": [
+                  {}
+                ]
+              }
+            },
+            {
+              "fieldLabel": "Field B",
+              "fieldType": "=dropdown",
+              "fieldOptions": {
+                "values": [
+                  {
+                    "option": "Manager"
+                  },
+                  {
+                    "option": "Employee"
+                  },
+                  {
+                    "option": "Guard"
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.5,
+      "position": [
+        48,
+        0
+      ],
+      "id": "23a3f75e-ef1f-4f64-996c-116084c68ac6",
+      "name": "On form submission",
+      "webhookId": "48a18ac4-439d-43c8-a72f-696760e19bcb"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appA3oLPuBxcizu4e",
+          "mode": "list",
+          "cachedResultName": "clean_dwlr.csv",
+          "cachedResultUrl": "https://airtable.com/appA3oLPuBxcizu4e"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblJ8cCQhx0jjDc2n",
+          "mode": "list",
+          "cachedResultName": "New Table",
+          "cachedResultUrl": "https://airtable.com/appA3oLPuBxcizu4e/tblJ8cCQhx0jjDc2n"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $('Create a record').item.json.id }}",
+            "Field C": "5"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Record Name",
+              "displayName": "Record Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Field A",
+              "displayName": "Field A",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Field B",
+              "displayName": "Field B",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Manager",
+                  "value": "Manager"
+                },
+                {
+                  "name": "Employee",
+                  "value": "Employee"
+                },
+                {
+                  "name": "Guard",
+                  "value": "Guard"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Field C",
+              "displayName": "Field C",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Field D",
+              "displayName": "Field D",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        624,
+        -48
+      ],
+      "id": "a1d009c3-cb20-4d93-bb3e-e8feba1ce312",
+      "name": "Update record",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "gUKGMObugOz7rl2q",
+          "name": "Airtable Personal Access Token account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appA3oLPuBxcizu4e",
+          "mode": "list",
+          "cachedResultName": "clean_dwlr.csv",
+          "cachedResultUrl": "https://airtable.com/appA3oLPuBxcizu4e"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblJ8cCQhx0jjDc2n",
+          "mode": "list",
+          "cachedResultName": "New Table",
+          "cachedResultUrl": "https://airtable.com/appA3oLPuBxcizu4e/tblJ8cCQhx0jjDc2n"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $('Create a record').item.json.id }}",
+            "Field C": "3"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Record Name",
+              "displayName": "Record Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Field A",
+              "displayName": "Field A",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Field B",
+              "displayName": "Field B",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Manager",
+                  "value": "Manager"
+                },
+                {
+                  "name": "Employee",
+                  "value": "Employee"
+                },
+                {
+                  "name": "Guard",
+                  "value": "Guard"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Field C",
+              "displayName": "Field C",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Field D",
+              "displayName": "Field D",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        624,
+        80
+      ],
+      "id": "a881c6ce-13b4-469d-850b-a2394c209a5a",
+      "name": "Update record1",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "gUKGMObugOz7rl2q",
+          "name": "Airtable Personal Access Token account 3"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "base": {
+          "__rl": true,
+          "value": "appA3oLPuBxcizu4e",
+          "mode": "list",
+          "cachedResultName": "clean_dwlr.csv",
+          "cachedResultUrl": "https://airtable.com/appA3oLPuBxcizu4e"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tblJ8cCQhx0jjDc2n",
+          "mode": "list",
+          "cachedResultName": "New Table",
+          "cachedResultUrl": "https://airtable.com/appA3oLPuBxcizu4e/tblJ8cCQhx0jjDc2n"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "id": "={{ $('Create a record').item.json.id }}",
+            "Field C": "1"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": false
+            },
+            {
+              "id": "Record Name",
+              "displayName": "Record Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Field A",
+              "displayName": "Field A",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Field B",
+              "displayName": "Field B",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Manager",
+                  "value": "Manager"
+                },
+                {
+                  "name": "Employee",
+                  "value": "Employee"
+                },
+                {
+                  "name": "Guard",
+                  "value": "Guard"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Field C",
+              "displayName": "Field C",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Field D",
+              "displayName": "Field D",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        624,
+        224
+      ],
+      "id": "65c98441-0a4e-47f8-b9b6-85a0f62f5cc1",
+      "name": "Update record2",
+      "credentials": {
+        "airtableTokenApi": {
+          "id": "gUKGMObugOz7rl2q",
+          "name": "Airtable Personal Access Token account 3"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Create a record": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Create a record",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "Update record",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update record1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update record2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "571af693-a65e-4f4e-8095-fac06038b78d",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "278fedfc075316a1ccba1302a84a2a9efb903aa8cbc4fe2e328dd80667753a53"
+  },
+  "id": "JWI5hcON2F2TzjvK",
+  "tags": []
+}
